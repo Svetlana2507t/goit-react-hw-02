@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './App.css';
 import Description from '../Description/Description';
 import Feedback from '../Feedback/Feedback';
 import Options from '../Options/Options';
+import Notification from '../Notification/Notification';
 
 function App() {
   const [rateState, setRateState] = useState({
@@ -10,10 +11,10 @@ function App() {
     neutral: 0,
     bad: 0,
   });
-  const handleRateChange = type => {
+  const updateFeedback = feedbackType => {
     setRateState(prevState => ({
       ...prevState,
-      [type]: prevState[type] + 1,
+      [feedbackType]: prevState[feedbackType] + 1,
     }));
   };
   const handleReset = () => {
@@ -23,13 +24,24 @@ function App() {
       bad: 0,
     });
   };
+  const totalFeedback = rateState.good + rateState.neutral + rateState.bad;
+
+  useEffect(() => {
+    window.localStorage.setItem('feedback', JSON.stringify({ rateState }));
+  }, [rateState]);
 
   return (
     <>
-      <h1>Sip Happens Caf&#233;</h1>
+      {/* <h1>Sip Happens Caf&#233;</h1> */}
       <Description />
-      <Options rateState={rateState} onRateChange={handleRateChange} onReset={handleReset} />
-      <Feedback rateState={rateState} />
+
+      <Options rateState={rateState} onFeedback={updateFeedback} onReset={handleReset} />
+
+      {totalFeedback ? (
+        <Feedback rateState={rateState} />
+      ) : (
+        <Notification rateState={{ good: 0, neutral: 0, bad: 0 }} />
+      )}
     </>
   );
 }
