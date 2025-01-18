@@ -1,27 +1,22 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import css from './Options.module.css';
 
-const Options = () => {
-  const [rateGood, setRateGood] = useState(0);
-  const [rateNeutral, setRateNeutral] = useState(0);
-  const [rateBad, setRateBad] = useState(0);
+const Options = ({ onRateChange, onReset }) => {
+  //   const [rateGood, setRateGood] = useState(0);
+  //   const [rateNeutral, setRateNeutral] = useState(0);
+  //   const [rateBad, setRateBad] = useState(0);
 
   const handleClickGood = () => {
-    console.log(rateGood);
-    setRateGood(rateGood + 1);
+    onRateChange('good');
   };
   const handleClickNeutral = () => {
-    setRateNeutral(rateNeutral + 1);
-    console.log(rateNeutral);
+    onRateChange('neutral');
   };
   const handleClickBad = () => {
-    console.log(rateBad);
-    setRateBad(rateBad + 1);
+    onRateChange('bad');
   };
   const handleClickReset = () => {
-    setRateGood(0);
-    setRateNeutral(0);
-    setRateBad(0);
+    onReset();
   };
 
   return (
