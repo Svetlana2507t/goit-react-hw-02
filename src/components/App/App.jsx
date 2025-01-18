@@ -6,11 +6,11 @@ import Options from '../Options/Options';
 import Notification from '../Notification/Notification';
 
 function App() {
-  const [rateState, setRateState] = useState({
-    good: 0,
-    neutral: 0,
-    bad: 0,
+  const [rateState, setRateState] = useState(() => {
+    const savedState = window.localStorage.getItem('feedback');
+    return savedState ? JSON.parse(savedState) : { good: 0, neutral: 0, bad: 0 };
   });
+
   const updateFeedback = feedbackType => {
     setRateState(prevState => ({
       ...prevState,
@@ -27,7 +27,7 @@ function App() {
   const totalFeedback = rateState.good + rateState.neutral + rateState.bad;
 
   useEffect(() => {
-    window.localStorage.setItem('feedback', JSON.stringify({ rateState }));
+    window.localStorage.setItem('feedback', JSON.stringify(rateState));
   }, [rateState]);
 
   return (
