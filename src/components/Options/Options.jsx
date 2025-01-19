@@ -1,7 +1,7 @@
 //import { useState } from 'react';
 import css from './Options.module.css';
 
-const Options = ({ onFeedback, onReset }) => {
+const Options = ({ onFeedback, onReset, totalFeedback }) => {
   const handleClickGood = () => {
     onFeedback('good');
   };
@@ -14,6 +14,7 @@ const Options = ({ onFeedback, onReset }) => {
   const handleClickReset = () => {
     onReset();
   };
+  console.log('totalFeedback', +totalFeedback);
 
   return (
     <div className={css.btn_wrapper}>
@@ -26,7 +27,7 @@ const Options = ({ onFeedback, onReset }) => {
       <button className={css.btn} onClick={handleClickBad}>
         Bad
       </button>
-      <button className={css.btn} onClick={handleClickReset}>
+      <button className={+totalFeedback > 0 ? css.btn : css.hidden} onClick={handleClickReset}>
         Reset
       </button>
     </div>

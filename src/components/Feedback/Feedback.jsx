@@ -1,6 +1,4 @@
-const Feedback = ({ rateState }) => {
-  const totalFeedback = rateState.good + rateState.neutral + rateState.bad;
-  const positiveFeedback = Math.round((rateState.good / totalFeedback) * 100);
+const Feedback = ({ rateState, totalFeedback, positiveFeedback }) => {
   if (!totalFeedback) {
     return null; // No feedback yet
   }

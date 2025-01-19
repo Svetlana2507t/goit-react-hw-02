@@ -26,6 +26,8 @@ function App() {
   };
   const totalFeedback = rateState.good + rateState.neutral + rateState.bad;
 
+  const positiveFeedback = Math.round((rateState.good / totalFeedback) * 100);
+
   useEffect(() => {
     window.localStorage.setItem('feedback', JSON.stringify(rateState));
   }, [rateState]);
@@ -35,10 +37,19 @@ function App() {
       {/* <h1>Sip Happens Caf&#233;</h1> */}
       <Description />
 
-      <Options rateState={rateState} onFeedback={updateFeedback} onReset={handleReset} />
+      <Options
+        rateState={rateState}
+        onFeedback={updateFeedback}
+        onReset={handleReset}
+        totalFeedback={totalFeedback}
+      />
 
       {totalFeedback ? (
-        <Feedback rateState={rateState} />
+        <Feedback
+          rateState={rateState}
+          totalFeedback={totalFeedback}
+          positiveFeedback={positiveFeedback}
+        />
       ) : (
         <Notification rateState={{ good: 0, neutral: 0, bad: 0 }} />
       )}
